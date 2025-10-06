@@ -8,8 +8,11 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import AppearanceToggleDropdown from '@/components/appearance-dropdown';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import NavigationHeader from '@/components/layout/NavigationHeader';
+import HeroSection from '@/components/layout/HeroSection';
+import CTASection from '@/components/layout/CTASection';
+import Footer from '@/components/layout/Footer';
 import {
     CheckCircle,
     Clock,
@@ -23,83 +26,21 @@ import {
 } from 'lucide-react';
 
 export default function Services() {
+    const { props } = usePage();
+    const t = props.translations as Record<string, string> || {};
+
     return (
         <>
             <Head title="Services - PT. Trans Agung Utama" />
 
-            {/* Navigation Header */}
-            <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="mx-auto max-w-7xl flex h-16 items-center px-4 sm:px-6 lg:px-8">
-                    <div className="mr-4 hidden md:flex">
-                        <Link
-                            href="/"
-                            className="mr-6 flex items-center space-x-2"
-                        >
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
-                                <span className="text-sm font-bold">TAU</span>
-                            </div>
-                            <span className="hidden font-bold sm:inline-block">
-                                PT. Trans Agung Utama
-                            </span>
-                        </Link>
-                        <nav className="flex items-center gap-6 text-sm">
-                            <Link
-                                href="/"
-                                className="font-medium text-foreground transition-colors hover:text-blue-600"
-                            >
-                                Home
-                            </Link>
-                            <Link
-                                href="/about"
-                                className="font-medium text-foreground transition-colors hover:text-blue-600"
-                            >
-                                About
-                            </Link>
-                            <Link
-                                href="/services"
-                                className="font-medium text-blue-600"
-                            >
-                                Services
-                            </Link>
-                            <Link
-                                href="/contact"
-                                className="font-medium text-foreground transition-colors hover:text-blue-600"
-                            >
-                                Contact
-                            </Link>
-                        </nav>
-                    </div>
-                    <div className="flex flex-1 items-center justify-end space-x-2">
-                        <AppearanceToggleDropdown />
-                        <div className="w-full flex-1 md:w-auto md:flex-none">
-                            <Button variant="outline" size="sm" asChild>
-                                <Link href="/contact">Get Quote</Link>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <NavigationHeader currentPage="services" />
 
-            {/* Hero Section */}
-            <section className="relative bg-gradient-to-br from-blue-50 to-blue-100 py-20 dark:from-blue-900/20 dark:to-blue-800/20">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                        <Badge variant="secondary">Our Services</Badge>
-                        <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                            Comprehensive Logistics Solutions
-                        </h1>
-                        <p className="max-w-[900px] text-muted-foreground md:text-xl">
-                            From land transportation to maritime shipping, we
-                            provide end-to-end logistics services that ensure
-                            your cargo reaches its destination safely and on
-                            time.
-                        </p>
-                        <Button size="lg" asChild>
-                            <Link href="/contact">Get a Quote</Link>
-                        </Button>
-                    </div>
-                </div>
-            </section>
+            <HeroSection
+                badge={t.page_services_title || "Our Services"}
+                title={t.page_services_description || "Comprehensive Logistics Solutions"}
+                description="From land transportation to maritime shipping, we provide end-to-end logistics services that ensure your cargo reaches its destination safely and on time."
+                primaryButton={{ text: "Get a Quote", href: "/contact" }}
+            />
 
             {/* Services Tabs */}
             <section className="bg-white py-16 dark:bg-gray-900">
@@ -154,7 +95,7 @@ export default function Services() {
                                         <Truck className="h-12 w-12 text-blue-600" />
                                         <div>
                                             <h2 className="text-2xl font-bold">
-                                                Land Transportation
+                                                {t.service_detail_land_title || "Land Transportation"}
                                             </h2>
                                             <p className="text-muted-foreground">
                                                 Extensive fleet and routes
@@ -764,8 +705,7 @@ export default function Services() {
                             </Button>
                             <Button
                                 size="lg"
-                                variant="outline"
-                                className="border-white text-white hover:bg-white hover:text-blue-600"
+                                className=""
                                 asChild
                             >
                                 <Link href="/contact">Contact Us</Link>

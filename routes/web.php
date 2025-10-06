@@ -1,23 +1,22 @@
 <?php
 
+use App\Http\Controllers\FrontpageController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('homepage');
-})->name('home');
+Route::get('language/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'id'])) {
+        Session::put('locale', $locale);
+    }
 
-Route::get('/about', function () {
-    return Inertia::render('about');
-})->name('about');
+    return redirect()->back();
+})->name('language.switch');
 
-Route::get('/services', function () {
-    return Inertia::render('services');
-})->name('services');
-
-Route::get('/contact', function () {
-    return Inertia::render('contact');
-})->name('contact');
+Route::get('/', [FrontpageController::class, 'homepage'])->name('home');
+Route::get('/about', [FrontpageController::class, 'about'])->name('about');
+Route::get('/services', [FrontpageController::class, 'services'])->name('services');
+Route::get('/contact', [FrontpageController::class, 'contact'])->name('contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -25,5 +24,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-require __DIR__ . '/settings.php';
-require __DIR__ . '/auth.php';
+require __DIR__.'/settings.php';
+require __DIR__.'/auth.php';

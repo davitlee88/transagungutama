@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { MapPin, Phone } from 'lucide-react';
 
 interface FooterProps {
@@ -6,41 +6,40 @@ interface FooterProps {
     showContactInfo?: boolean;
 }
 
-export default function Footer({ 
+export default function Footer({
     showQuickLinks = true,
-    showContactInfo = true 
+    showContactInfo = true
 }: FooterProps) {
+    const { props } = usePage();
+    const t = props.translations as Record<string, string> || {};
     return (
         <footer className="bg-gray-900 text-white">
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                     <div>
                         <div className="mb-4 flex items-center space-x-2">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
-                                <span className="text-sm font-bold">
-                                    TAU
-                                </span>
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-foreground">
+                                <img src="/assets/logo.webp" alt="TAU" className="text-sm font-bold" />
                             </div>
                             <span className="font-bold">
                                 PT. Trans Agung Utama
                             </span>
                         </div>
                         <p className="text-sm text-gray-400">
-                            Your trusted logistics partner across Indonesia
-                            since 2000.
+                            {t.footer_tagline || 'Your trusted logistics partner across Indonesia since 2000.'}
                         </p>
                     </div>
-                    
+
                     {showQuickLinks && (
                         <div>
-                            <h3 className="mb-4 font-semibold">Quick Links</h3>
+                            <h3 className="mb-4 font-semibold">{t.footer_quick_links || 'Quick Links'}</h3>
                             <ul className="space-y-2 text-sm text-gray-400">
                                 <li>
                                     <Link
                                         href="/about"
                                         className="hover:text-white"
                                     >
-                                        About Us
+                                        {t.footer_about_us || 'About Us'}
                                     </Link>
                                 </li>
                                 <li>
@@ -48,7 +47,7 @@ export default function Footer({
                                         href="/services"
                                         className="hover:text-white"
                                     >
-                                        Services
+                                        {t.footer_services || 'Services'}
                                     </Link>
                                 </li>
                                 <li>
@@ -56,7 +55,7 @@ export default function Footer({
                                         href="/contact"
                                         className="hover:text-white"
                                     >
-                                        Contact
+                                        {t.footer_contact || 'Contact'}
                                     </Link>
                                 </li>
                             </ul>
@@ -66,7 +65,7 @@ export default function Footer({
                     {showContactInfo && (
                         <>
                             <div>
-                                <h3 className="mb-4 font-semibold">Medan Office</h3>
+                                <h3 className="mb-4 font-semibold">{t.footer_medan_office || 'Medan Office'}</h3>
                                 <ul className="space-y-2 text-sm text-gray-400">
                                     <li className="flex items-center gap-2">
                                         <MapPin className="h-4 w-4" />
@@ -81,7 +80,7 @@ export default function Footer({
                             </div>
                             <div>
                                 <h3 className="mb-4 font-semibold">
-                                    Jakarta Office
+                                    {t.footer_jakarta_office || 'Jakarta Office'}
                                 </h3>
                                 <ul className="space-y-2 text-sm text-gray-400">
                                     <li className="flex items-center gap-2">
@@ -104,10 +103,11 @@ export default function Footer({
                     )}
                 </div>
                 <div className="mt-8 border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-                    <p>
-                        &copy; 2024 PT. Trans Agung Utama. All rights
-                        reserved.
-                    </p>
+                    <p
+                    dangerouslySetInnerHTML={{
+                        __html: (t.footer_copyright || '&copy; {year} PT. Trans Agung Utama. All rights reserved.').replace('{year}', new Date().getFullYear().toString())
+                    }}
+                />
                 </div>
             </div>
         </footer>

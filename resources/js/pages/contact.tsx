@@ -10,95 +10,35 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Head, Link } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import NavigationHeader from '@/components/layout/NavigationHeader';
 import HeroSection from '@/components/layout/HeroSection';
 import CTASection from '@/components/layout/CTASection';
 import Footer from '@/components/layout/Footer';
 import ContactCard from '@/components/cards/ContactCard';
+import MapComponent from '@/components/MapComponent';
 import {
     Clock,
     MessageSquare,
     Phone,
     Send,
-    MapPin,
 } from 'lucide-react';
 
 export default function Contact() {
+    const { props } = usePage();
+    const t = props.translations as Record<string, string> || {};
     return (
         <>
             <Head title="Contact Us - PT. Trans Agung Utama" />
 
-            {/* Navigation Header */}
-            <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="mx-auto max-w-7xl flex h-16 items-center px-4 sm:px-6 lg:px-8">
-                    <div className="mr-4 hidden md:flex">
-                        <Link
-                            href="/"
-                            className="mr-6 flex items-center space-x-2"
-                        >
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
-                                <span className="text-sm font-bold">TAU</span>
-                            </div>
-                            <span className="hidden font-bold sm:inline-block">
-                                PT. Trans Agung Utama
-                            </span>
-                        </Link>
-                        <nav className="flex items-center gap-6 text-sm">
-                            <Link
-                                href="/"
-                                className="font-medium text-foreground transition-colors hover:text-blue-600"
-                            >
-                                Home
-                            </Link>
-                            <Link
-                                href="/about"
-                                className="font-medium text-foreground transition-colors hover:text-blue-600"
-                            >
-                                About
-                            </Link>
-                            <Link
-                                href="/services"
-                                className="font-medium text-foreground transition-colors hover:text-blue-600"
-                            >
-                                Services
-                            </Link>
-                            <Link
-                                href="/contact"
-                                className="font-medium text-blue-600"
-                            >
-                                Contact
-                            </Link>
-                        </nav>
-                    </div>
-                    <div className="flex flex-1 items-center justify-end space-x-2">
-                        <AppearanceToggleDropdown />
-                        <div className="w-full flex-1 md:w-auto md:flex-none">
-                            <Button variant="outline" size="sm">
-                                Get Quote
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <NavigationHeader currentPage="contact" />
 
-            {/* Hero Section */}
-            <section className="relative bg-gradient-to-br from-blue-50 to-blue-100 py-20 dark:from-blue-900/20 dark:to-blue-800/20">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                        <Badge variant="secondary">Get In Touch</Badge>
-                        <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                            Contact Our Team
-                        </h1>
-                        <p className="max-w-[900px] text-muted-foreground md:text-xl">
-                            Ready to discuss your logistics needs? Reach out to
-                            our team at either our Medan or Jakarta office.
-                            We're here to help you find the right solution for
-                            your business.
-                        </p>
-                    </div>
-                </div>
-            </section>
+  
+            <HeroSection
+                badge={t.contact_hero_badge || 'Get In Touch'}
+                title={t.contact_hero_title || 'Contact Our Team'}
+                description={t.contact_hero_desc || 'Ready to discuss your logistics needs? Reach out to our team at either our Medan or Jakarta office. We\'re here to help you find the right solution for your business.'}
+            />
 
             {/* Contact Information */}
             <section className="bg-white py-16 dark:bg-gray-900">
@@ -107,111 +47,60 @@ export default function Contact() {
                         <div className="space-y-8">
                             <div>
                                 <h2 className="mb-6 text-3xl font-bold">
-                                    Our Offices
+                                    {t.contact_offices_title || 'Our Offices'}
                                 </h2>
 
-                                {/* Medan Office */}
-                                <Card className="mb-6">
-                                    <CardHeader>
-                                        <CardTitle className="flex items-center gap-2">
-                                            <Building className="h-5 w-5 text-blue-600" />
-                                            Medan Office
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="space-y-4">
-                                        <div className="flex items-start gap-3">
-                                            <MapPin className="mt-0.5 h-5 w-5 text-blue-600" />
-                                            <div>
-                                                <h4 className="font-semibold">
-                                                    Address
-                                                </h4>
-                                                <p className="text-muted-foreground">
-                                                    Jln. Langsa (Ujung) No. 69
-                                                    <br />
-                                                    Medan, Sumatera Utara
-                                                    <br />
-                                                    Kode Pos: 20351
-                                                </p>
-                                            </div>
+                                <div className="space-y-6">
+                                    <div className="flex flex-col space-y-4">
+                                        <div className="flex flex-col sm:flex-row gap-4">
+                                            <Button variant="outline" asChild className="flex-1">
+                                                <a href="https://wa.me/628126466355" target="_blank" rel="noopener noreferrer">
+                                                    <Phone className="mr-2 h-4 w-4" />
+                                                    {t.contact_whatsapp_medan || 'WhatsApp Medan'}
+                                                </a>
+                                            </Button>
+                                            <Button variant="outline" asChild className="flex-1">
+                                                <a href="mailto:info@transagungutama.com">
+                                                    <MessageSquare className="mr-2 h-4 w-4" />
+                                                    {t.contact_email_medan || 'Email Medan'}
+                                                </a>
+                                            </Button>
                                         </div>
-                                        <div className="flex items-center gap-3">
-                                            <Phone className="h-5 w-5 text-blue-600" />
-                                            <div>
-                                                <h4 className="font-semibold">
-                                                    Phone
-                                                </h4>
-                                                <p className="text-muted-foreground">
-                                                    0812 646 6355
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <Mail className="h-5 w-5 text-blue-600" />
-                                            <div>
-                                                <h4 className="font-semibold">
-                                                    Email
-                                                </h4>
-                                                <p className="text-muted-foreground">
-                                                    info@transagungutama.com
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
 
-                                {/* Jakarta Office */}
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle className="flex items-center gap-2">
-                                            <Building className="h-5 w-5 text-blue-600" />
-                                            Jakarta Office
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="space-y-4">
-                                        <div className="flex items-start gap-3">
-                                            <MapPin className="mt-0.5 h-5 w-5 text-blue-600" />
-                                            <div>
-                                                <h4 className="font-semibold">
-                                                    Address
-                                                </h4>
-                                                <p className="text-muted-foreground">
-                                                    Pergudangan Angke Indah Jin.
-                                                    Kapuk Poglar
-                                                    <br />
-                                                    Blok. C No. 10
-                                                    <br />
-                                                    Jakarta Utara, Kode Pos:
-                                                    14440
-                                                </p>
-                                            </div>
+                                        <div className="flex flex-col sm:flex-row gap-4">
+                                            <Button variant="outline" asChild className="flex-1">
+                                                <a href="https://wa.me/6281297922068" target="_blank" rel="noopener noreferrer">
+                                                    <Phone className="mr-2 h-4 w-4" />
+                                                    {t.contact_whatsapp_jakarta || 'WhatsApp Jakarta'}
+                                                </a>
+                                            </Button>
+                                            <Button variant="outline" asChild className="flex-1">
+                                                <a href="mailto:jakarta@transagungutama.com">
+                                                    <MessageSquare className="mr-2 h-4 w-4" />
+                                                    {t.contact_email_jakarta || 'Email Jakarta'}
+                                                </a>
+                                            </Button>
                                         </div>
-                                        <div className="flex items-center gap-3">
-                                            <Phone className="h-5 w-5 text-blue-600" />
-                                            <div>
-                                                <h4 className="font-semibold">
-                                                    Phone
-                                                </h4>
-                                                <p className="text-muted-foreground">
-                                                    021-29667216
-                                                </p>
-                                                <p className="text-muted-foreground">
-                                                    0812 9792 2068
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <Mail className="h-5 w-5 text-blue-600" />
-                                            <div>
-                                                <h4 className="font-semibold">
-                                                    Email
-                                                </h4>
-                                                <p className="text-muted-foreground">
-                                                    jakarta@transagungutama.com
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
+                                    </div>
+
+                                    <ContactCard
+                                        officeName={t.contact_medan_office || 'Medan Office'}
+                                        address="Jln. Langsa (Ujung) No. 69"
+                                        city="Medan, Sumatera Utara"
+                                        postalCode="20351"
+                                        phones={["0812 646 6355"]}
+                                        email="info@transagungutama.com"
+                                    />
+
+                                    <ContactCard
+                                        officeName={t.contact_jakarta_office || 'Jakarta Office'}
+                                        address="Pergudangan Angke Indah Jin. Kapuk Poglar Blok. C No. 10"
+                                        city="Jakarta Utara"
+                                        postalCode="14440"
+                                        phones={["021-29667216", "0812 9792 2068"]}
+                                        email="jakarta@transagungutama.com"
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -221,11 +110,10 @@ export default function Contact() {
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
                                         <MessageSquare className="h-5 w-5 text-blue-600" />
-                                        Send Us a Message
+                                        {t.contact_send_message_title || 'Send Us a Message'}
                                     </CardTitle>
                                     <CardDescription>
-                                        Fill out the form below and our team
-                                        will get back to you within 24 hours.
+                                        {t.contact_send_message_desc || 'Fill out the form below and our team will get back to you within 24 hours.'}
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
@@ -233,7 +121,7 @@ export default function Contact() {
                                         <div className="grid gap-4 sm:grid-cols-2">
                                             <div className="space-y-2">
                                                 <Label htmlFor="firstName">
-                                                    First Name
+                                                    {t.contact_first_name || 'First Name'}
                                                 </Label>
                                                 <Input
                                                     id="firstName"
@@ -243,7 +131,7 @@ export default function Contact() {
                                             </div>
                                             <div className="space-y-2">
                                                 <Label htmlFor="lastName">
-                                                    Last Name
+                                                    {t.contact_last_name || 'Last Name'}
                                                 </Label>
                                                 <Input
                                                     id="lastName"
@@ -253,7 +141,7 @@ export default function Contact() {
                                             </div>
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="email">Email</Label>
+                                            <Label htmlFor="email">{t.contact_email_label || 'Email'}</Label>
                                             <Input
                                                 id="email"
                                                 type="email"
@@ -262,7 +150,7 @@ export default function Contact() {
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="phone">Phone</Label>
+                                            <Label htmlFor="phone">{t.contact_phone_label || 'Phone'}</Label>
                                             <Input
                                                 id="phone"
                                                 type="tel"
@@ -271,7 +159,7 @@ export default function Contact() {
                                         </div>
                                         <div className="space-y-2">
                                             <Label htmlFor="company">
-                                                Company
+                                                {t.contact_company_label || 'Company'}
                                             </Label>
                                             <Input
                                                 id="company"
@@ -280,35 +168,35 @@ export default function Contact() {
                                         </div>
                                         <div className="space-y-2">
                                             <Label htmlFor="service">
-                                                Service Interest
+                                                {t.contact_service_label || 'Service Interest'}
                                             </Label>
                                             <select
                                                 id="service"
                                                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                                             >
                                                 <option value="">
-                                                    Select a service
+                                                    {t.contact_form_service_placeholder || 'Select a service'}
                                                 </option>
                                                 <option value="land">
-                                                    Land Transportation
+                                                    {t.services_land_transport || 'Land Transportation'}
                                                 </option>
                                                 <option value="maritime">
-                                                    Maritime Shipping
+                                                    {t.services_maritime || 'Maritime Shipping'}
                                                 </option>
                                                 <option value="consulting">
-                                                    Logistics Consulting
+                                                    {t.services_consulting || 'Logistics Consulting'}
                                                 </option>
                                                 <option value="warehousing">
-                                                    Cargo Handling & Warehousing
+                                                    {t.services_warehousing || 'Cargo Handling & Warehousing'}
                                                 </option>
                                                 <option value="multiple">
-                                                    Multiple Services
+                                                    {t.contact_form_service || 'Multiple Services'}
                                                 </option>
                                             </select>
                                         </div>
                                         <div className="space-y-2">
                                             <Label htmlFor="message">
-                                                Message
+                                                {t.contact_message_label || 'Message'}
                                             </Label>
                                             <Textarea
                                                 id="message"
@@ -323,7 +211,7 @@ export default function Contact() {
                                             size="lg"
                                         >
                                             <Send className="mr-2 h-4 w-4" />
-                                            Send Message
+                                            {t.contact_send_button || 'Send Message'}
                                         </Button>
                                     </form>
                                 </CardContent>
@@ -338,14 +226,12 @@ export default function Contact() {
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="mb-12 flex flex-col items-center justify-center space-y-4 text-center">
                         <div className="space-y-2">
-                            <Badge variant="secondary">Business Hours</Badge>
+                            <Badge variant="secondary">{t.contact_business_hours_badge || 'Business Hours'}</Badge>
                             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                                When to Reach Us
+                                {t.contact_business_hours_title || 'When to Reach Us'}
                             </h2>
                             <p className="max-w-[900px] text-muted-foreground md:text-xl">
-                                Our team is available to assist you during the
-                                following hours. For urgent inquiries, please
-                                call us directly.
+                                {t.contact_business_hours_desc || 'Our team is available to assist you during the following hours. For urgent inquiries, please call us directly.'}
                             </p>
                         </div>
                     </div>
@@ -353,42 +239,42 @@ export default function Contact() {
                         <Card className="text-center">
                             <CardHeader>
                                 <Clock className="mx-auto mb-2 h-12 w-12 text-blue-600" />
-                                <CardTitle>Monday - Friday</CardTitle>
+                                <CardTitle>{t.contact_monday_friday || 'Monday - Friday'}</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <p className="text-2xl font-bold text-blue-600">
                                     08:00 - 17:00
                                 </p>
                                 <p className="text-muted-foreground">
-                                    WIB (Western Indonesia Time)
+                                    {t.contact_wib_time || 'WIB (Western Indonesia Time)'}
                                 </p>
                             </CardContent>
                         </Card>
                         <Card className="text-center">
                             <CardHeader>
                                 <Clock className="mx-auto mb-2 h-12 w-12 text-blue-600" />
-                                <CardTitle>Saturday</CardTitle>
+                                <CardTitle>{t.contact_saturday || 'Saturday'}</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <p className="text-2xl font-bold text-blue-600">
                                     08:00 - 12:00
                                 </p>
                                 <p className="text-muted-foreground">
-                                    WIB (Western Indonesia Time)
+                                    {t.contact_wib_time || 'WIB (Western Indonesia Time)'}
                                 </p>
                             </CardContent>
                         </Card>
                         <Card className="text-center">
                             <CardHeader>
                                 <Clock className="mx-auto mb-2 h-12 w-12 text-blue-600" />
-                                <CardTitle>Sunday</CardTitle>
+                                <CardTitle>{t.contact_sunday || 'Sunday'}</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <p className="text-2xl font-bold text-gray-400">
-                                    Closed
+                                    {t.contact_closed || 'Closed'}
                                 </p>
                                 <p className="text-muted-foreground">
-                                    Emergency services available
+                                    {t.contact_emergency || 'Emergency services available'}
                                 </p>
                             </CardContent>
                         </Card>
@@ -396,101 +282,64 @@ export default function Contact() {
                 </div>
             </section>
 
-            {/* Quick Response CTA */}
-            <section className="bg-blue-600 py-16 text-white">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                        <div className="space-y-2">
-                            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                                Need Immediate Assistance?
-                            </h2>
-                            <p className="max-w-[600px] text-blue-100 md:text-xl">
-                                For urgent logistics requirements or
-                                time-sensitive shipments, call us directly for
-                                immediate support.
-                            </p>
-                        </div>
-                        <div className="flex flex-col gap-4 min-[400px]:flex-row">
-                            <Button size="lg" variant="secondary" asChild>
-                                <Link href="tel:08126466355">
-                                    <Phone className="mr-2 h-4 w-4" />
-                                    Call Medan Office
-                                </Link>
-                            </Button>
-                            <Button size="lg" variant="secondary" asChild>
-                                <Link href="tel:02129667216">
-                                    <Phone className="mr-2 h-4 w-4" />
-                                    Call Jakarta Office
-                                </Link>
-                            </Button>
-                            <Button
-                                size="lg"
-                                variant="outline"
-                                className="border-white text-white hover:bg-white hover:text-blue-600"
-                                asChild
-                            >
-                                <Link href="mailto:info@transagungutama.com">
-                                    <Mail className="mr-2 h-4 w-4" />
-                                    Email Us
-                                </Link>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <CTASection
+                title={t.contact_cta_title || 'Need Immediate Assistance?'}
+                description={t.contact_cta_desc || 'For urgent logistics requirements or time-sensitive shipments, contact us directly on WhatsApp for immediate support.'}
+                primaryButton={{ text: t.contact_whatsapp_medan || 'WhatsApp Medan', href: "https://wa.me/628126466355" }}
+                secondaryButton={{ text: t.contact_whatsapp_jakarta || 'WhatsApp Jakarta', href: "https://wa.me/6281297922068" }}
+                background="blue"
+            />
 
-            {/* Map Section - Placeholder */}
+            {/* Map Section */}
             <section className="bg-white py-16 dark:bg-gray-900">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="mb-12 flex flex-col items-center justify-center space-y-4 text-center">
                         <div className="space-y-2">
-                            <Badge variant="secondary">Our Locations</Badge>
+                            <Badge variant="secondary">{t.contact_locations_badge || 'Our Locations'}</Badge>
                             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                                Find Us
+                                {t.contact_locations_title || 'Find Us'}
                             </h2>
                             <p className="max-w-[900px] text-muted-foreground md:text-xl">
-                                Visit our offices in Medan and Jakarta. Both
-                                locations are strategically positioned to serve
-                                clients across Indonesia efficiently.
+                                {t.contact_locations_desc || 'Visit our offices in Medan and Jakarta. Both locations are strategically positioned to serve clients across Indonesia efficiently.'}
                             </p>
                         </div>
                     </div>
                     <div className="grid gap-8 lg:grid-cols-2">
                         <Card>
                             <CardHeader>
-                                <CardTitle>Medan Office Location</CardTitle>
+                                <CardTitle>{t.contact_medan_location || 'Medan Office Location'}</CardTitle>
                                 <CardDescription>
                                     Jln. Langsa (Ujung) No. 69, Medan
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <div className="flex aspect-video items-center justify-center rounded-lg bg-gray-200">
-                                    <MapPin className="h-12 w-12 text-gray-400" />
-                                    <span className="ml-2 text-gray-500">
-                                        Map Placeholder
-                                    </span>
-                                </div>
+                                <MapComponent
+                                    embedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127420.67476986806!2d98.43478899726566!3d3.6112436000000088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30312fb4c756ca2d%3A0xcf2021cd7c1d91c8!2sPT.%20Trans%20Agung%20Utama!5e0!3m2!1sen!2sid!4v1759733955779!5m2!1sen!2sid"
+                                    height="350px"
+                                    title="PT. Trans Agung Utama - Medan Office"
+                                />
                             </CardContent>
                         </Card>
                         <Card>
                             <CardHeader>
-                                <CardTitle>Jakarta Office Location</CardTitle>
+                                <CardTitle>{t.contact_jakarta_location || 'Jakarta Office Location'}</CardTitle>
                                 <CardDescription>
                                     Pergudangan Angke Indah, Jakarta Utara
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <div className="flex aspect-video items-center justify-center rounded-lg bg-gray-200">
-                                    <MapPin className="h-12 w-12 text-gray-400" />
-                                    <span className="ml-2 text-gray-500">
-                                        Map Placeholder
-                                    </span>
-                                </div>
+                                <MapComponent
+                                    embedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d860.8568343501734!2d106.77214303569747!3d-6.144207966272568!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f728a60c4075%3A0xb485d6499f9e54d6!2sPT.%20Trans%20Agung%20Utama!5e0!3m2!1sen!2sid!4v1759734087543!5m2!1sen!2sid"
+                                    height="350px"
+                                    title="PT. Trans Agung Utama - Jakarta Office"
+                                />
                             </CardContent>
                         </Card>
                     </div>
                 </div>
             </section>
+
+            <Footer />
         </>
     );
 }
